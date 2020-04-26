@@ -1,0 +1,42 @@
+#winrm set winrm/config/client @{TrustedHosts="192.168.1.166"}
+#Enable-PSRemoting –force
+
+$User = "dmmorgun"
+$PWord = ConvertTo-SecureString -String "PASSWORD" -AsPlainText -Force
+$Creds = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $User, $PWord
+
+Invoke-Command -ComputerName '192.168.1.166' -ScriptBlock { quser } -credential $Creds
+
+$scriptBlock = {
+     $ErrorActionPreference = 'Stop'
+ 
+     try {
+         ## Find all sessions matching the specified username
+         $sessions = quser | Where-Object {$_ -match 'JohnDoe'}
+         ## Parse the session IDs from the output
+         $sessionIds = ($sessions -split ' +')[2]
+         Write-Host "Found $(@($sessionIds).Count) user login(s) on computer."
+         ## Loop through each session ID and pass each to the logoff command
+         $sessionIds | ForEach-Object {
+             Write-Host "Logging off session id [$($_)]..."
+             logoff $_
+         }
+     } catch {
+         if ($_.Exception.Message -match 'No user exists') {
+             Write-Host "The user is not logged in."
+         } else {
+             throw $_.Exception.Message
+         }
+     }
+ }
+
+Invoke-Command -ComputerName '192.168.1.166' -ScriptBlock $scriptBlock -credential $Creds
+
+#Log off remotely UID 4
+#Invoke-Command -ComputerName '192.168.1.166' -ScriptBlock { logoff 4} -credential $Creds
+
+#Restart-Computer -ComputerName '192.168.1.166' -Credential $Creds -Force
+#Invoke-Command -ComputerName '192.168.1.166' -ScriptBlock { Restart-Computer -Force } -credential $Creds
+
+#Stop-Computer -ComputerName "Server01", "Server02", "localhost"
+#Invoke-Command -ComputerName '192.168.1.166' -ScriptBlock { Stop-Computer -Force } -credential $Creds
