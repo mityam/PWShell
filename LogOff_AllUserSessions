@@ -1,5 +1,5 @@
 #we have set, AllowRemoteRPC 's value to 1
-#under this HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server
+#HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server
 
 #HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System
 #If an entry named LocalAccountTokenFilterPolicy registry entry does not exist,
