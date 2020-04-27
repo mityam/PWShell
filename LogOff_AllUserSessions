@@ -1,5 +1,5 @@
-#Windows10 target mashine should have 'Windows Remote Management (WS-Management)" service running
-#Registry Keys to be set:
+# Windows10 target mashine should have 'Windows Remote Management (WS-Management)" service running
+# Registry Keys to be set:
 # 1) HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server
 #    AllowRemoteRPC 's value to 1
 
@@ -11,7 +11,7 @@
 # OR set inside PWShell script:
 # Set-Item WSMan:\localhost\Client\TrustedHosts -Value '192.168.1.14,192.168.1.166'
 
-#Enable-PSRemoting –force
+# Enable-PSRemoting –force
 
 
 $User = "dmmorgun"
