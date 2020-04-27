@@ -7,6 +7,7 @@
 #    If an entry named LocalAccountTokenFilterPolicy registry entry does not exist,
 #    create it as DWORD and set its value to 1
 
+# Check Trusted Hosts WinRM setting: Get-Item WSMan:\localhost\Client\TrustedHosts
 # winrm set winrm/config/client @{TrustedHosts="192.168.1.166"}
 # OR set inside PWShell script:
 # Set-Item WSMan:\localhost\Client\TrustedHosts -Value '192.168.1.14,192.168.1.166'
