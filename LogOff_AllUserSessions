@@ -1,11 +1,16 @@
-#we have set, AllowRemoteRPC 's value to 1
-#HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server
+#Windows10 target mashine should have 'Windows Remote Management (WS-Management)" service running
+#Registry Keys to be set:
+# 1) HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server
+#    AllowRemoteRPC 's value to 1
 
-#HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System
-#If an entry named LocalAccountTokenFilterPolicy registry entry does not exist,
-#create it as DWORD and set its value to 1
+# 2) HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System
+#    If an entry named LocalAccountTokenFilterPolicy registry entry does not exist,
+#    create it as DWORD and set its value to 1
 
-#winrm set winrm/config/client @{TrustedHosts="192.168.1.166"}
+# winrm set winrm/config/client @{TrustedHosts="192.168.1.166"}
+# OR set inside PWShell script:
+# Set-Item WSMan:\localhost\Client\TrustedHosts -Value '192.168.1.14,192.168.1.166'
+
 #Enable-PSRemoting –force
 
 
